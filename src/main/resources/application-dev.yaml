@@ -3,7 +3,7 @@ server:
 # our own configuration for the file storage
 file:
   storage-dir: "filestorage/images/"
-
+  client-dir: "/images/**"
 
 
 spring:
@@ -11,6 +11,7 @@ spring:
     multipart:
       max-file-size: 5MB
       max-request-size: 5MB
+
 
   datasource:
     username: postgres
@@ -22,5 +23,7 @@ spring:
     hibernate:
       ddl-auto: create-drop # or update
     generate-ddl: true
-
+springdoc:
+  swagger-ui:
+    path: /
 

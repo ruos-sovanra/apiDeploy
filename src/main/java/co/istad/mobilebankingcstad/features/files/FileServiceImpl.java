@@ -1,5 +1,7 @@
 package co.istad.mobilebankingcstad.features.files;
 
+import co.istad.mobilebankingcstad.features.files.dto.FileResponse;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,6 +21,14 @@ public class FileServiceImpl implements FileService {
     @Value("${file.storage-dir}")
     String fileStorageDir;
 
+
+    private String generateImageUrl(HttpServletRequest request,String filename){
+        return String.format("%s://%s:%d/images/%s",
+                request.getScheme(),
+                request.getServerName(),
+                request.getServerPort(),
+                filename);
+    }
     private String uploadFile(MultipartFile file)  {
         try {
 //       Check if the directory doesn't exist , we will create the directory
@@ -42,10 +52,18 @@ public class FileServiceImpl implements FileService {
 
     }
 
-
     @Override
-    public String uploadSingleFile(MultipartFile file) {
-        return uploadFile(file);
+    public FileResponse uploadSingleFile(MultipartFile file, HttpServletRequest request) {
+
+        String filename = uploadFile(file);
+        String fullImageUrl = generateImageUrl(request,filename);
+
+        return FileResponse.builder()
+                .downloadUrl("null")
+                .fileType(file.getContentType())
+                .size(file.getSize())
+                .filename(filename)
+                .fullUrl(fullImageUrl).build();
     }
 
     @Override
