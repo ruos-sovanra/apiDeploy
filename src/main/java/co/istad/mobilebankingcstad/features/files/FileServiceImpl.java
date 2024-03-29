@@ -95,9 +95,9 @@ public class FileServiceImpl implements FileService {
             //        get path of the images
             Path imagePath = Path.of(fileStorageDir).resolve(filename);
             Resource resourceUrl = new UrlResource(imagePath.toUri());
-
             if(resourceUrl.exists()){
-                return ResponseEntity.ok()
+                return ResponseEntity
+                        .ok()
                     .contentType(MediaType.parseMediaType("image/jpeg"))
                     .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resourceUrl.getFilename() + "\"")
                     .body(resourceUrl);
