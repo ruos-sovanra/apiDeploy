@@ -1,7 +1,10 @@
 package co.istad.mobilebankingcstad.features.files;
 
 
+import co.istad.mobilebankingcstad.features.files.dto.FileResponse;
+import co.istad.mobilebankingcstad.utils.BaseResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,8 +17,17 @@ public class FileRestController {
     private final FileService fileService;
 
     @PostMapping(value = "",consumes = "multipart/form-data")
-    public String uploadSingleFile(@RequestPart("file")MultipartFile file){
-        return fileService.uploadSingleFile(file);
+    @ResponseStatus(HttpStatus.CREATED)
+    public BaseResponse<FileResponse> uploadSingleFile(
+            @RequestPart("file")MultipartFile file
+    ){
+        return BaseResponse
+                .<FileResponse>createSuccess()
+                .setPayload(
+                        new FileResponse(
+                                fileService.uploadSingleFile(file)
+                                ,"")
+                );
     }
 
     @PostMapping(value = "/multiple",consumes = "multipart/form-data")
