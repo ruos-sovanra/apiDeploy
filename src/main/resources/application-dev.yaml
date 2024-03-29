@@ -1,0 +1,26 @@
+server:
+  port: 8888
+# our own configuration for the file storage
+file:
+  storage-dir: "filestorage/images/"
+
+
+
+spring:
+  servlet: # this is for file upload
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+
+  datasource:
+    username: postgres
+    password: postgres@2023
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5434/mobile_banking_db
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop # or update
+    generate-ddl: true
+
+
