@@ -29,6 +29,7 @@ public class FileServiceImpl implements FileService {
             String fileName = UUID.randomUUID() + "." +
                     Objects.requireNonNull(file.getOriginalFilename())
                             .split("\\.")[1];
+            // handle if there are more than one dot !
 
             Files.copy(file.getInputStream(),
                     fileStoragePath.resolve(fileName),
