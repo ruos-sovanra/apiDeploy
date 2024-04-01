@@ -19,5 +19,11 @@ public class BaseResponse <T> {
                 .setMessage("Created Successfully!!! ")
         ;
     }
+    public static <T> BaseResponse<T> ok() {
+        return new BaseResponse<T>()
+                .setStatus(HttpStatus.OK.value())
+                .setMessage("Successfully Retrieved the data !!! ")
+        ;
+    }
 
 }

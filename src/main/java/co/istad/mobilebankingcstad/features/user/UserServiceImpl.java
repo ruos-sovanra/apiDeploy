@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -31,5 +32,11 @@ public class UserServiceImpl implements UserService{
         newUser.setRoles(roles);
         userRepository.save(newUser);
         return userMapper.toUserResponse(newUser);
+    }
+
+    @Override
+    public List<UserResponse> getAllUsers() {
+        return userRepository.findAll()
+                .stream().map(userMapper::toUserResponse).toList();
     }
 }
