@@ -39,4 +39,11 @@ public class UserServiceImpl implements UserService{
         return userRepository.findAll()
                 .stream().map(userMapper::toUserResponse).toList();
     }
+
+    @Override
+    public UserResponse getUserById(String id) {
+        var user = userRepository.findById(id)
+                .orElseThrow(); // NoSuchElemenmtException...
+        return userMapper.toUserResponse(user);
+    }
 }

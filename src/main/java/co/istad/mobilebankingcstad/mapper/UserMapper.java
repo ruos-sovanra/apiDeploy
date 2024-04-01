@@ -13,17 +13,13 @@ import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
-
     @Mapping(target ="roles", expression = "java(mapRoles(user.getRoles()))")
     @Mapping(target="studentCardId", source = "studentIdCard")
     UserResponse toUserResponse(User user);
-
     default Set<String> mapRoles(Set<Role> roles){
         return roles.stream().map(Role::getName).collect(Collectors.toSet());
     }
 //    define method that convert the set of role to set of string
-
-
     @Mapping(target ="roles", ignore = true)
     @Mapping(target="studentIdCard", source = "studentCardId")
     User requestToUser(UserRequest userRequest);

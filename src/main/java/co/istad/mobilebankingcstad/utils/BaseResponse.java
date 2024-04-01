@@ -26,4 +26,15 @@ public class BaseResponse <T> {
         ;
     }
 
+    public static <T> BaseResponse<T> notFound(){
+        return new BaseResponse<T>()
+                .setStatus(HttpStatus.NOT_FOUND.value())
+                .setMessage("Items could not be found!! ");
+    }
+    public static <T> BaseResponse<T> badRequest(){
+        return new BaseResponse<T>()
+                .setStatus(HttpStatus.BAD_REQUEST.value())
+                .setMessage("Bad request provided !");
+    }
+
 }
