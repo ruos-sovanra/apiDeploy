@@ -17,14 +17,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(updatable = false, nullable = false)
     private String id;
-
     @Column(unique = true,nullable = false)
     private String username;
-
     private String fullName;
     private String gender ;
     private String pin;
-
     @Column(unique = true,nullable = false)
     private String email;
 

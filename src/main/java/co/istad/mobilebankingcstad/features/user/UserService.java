@@ -10,4 +10,13 @@ public interface UserService {
     List<UserResponse> getAllUsers();
 
     UserResponse getUserById(String id);
+
+    void deleteUserById(String id);
+
+    UserResponse updateUserById(String id, UserRequest userRequest);
+
+    UserResponse disableUser(String id);
+
+    UserResponse enableUser(String id);
+
 }

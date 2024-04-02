@@ -19,6 +19,8 @@ public record UserRequest(
         @NotEmpty
         String gender,
 
+
+// handle this properly next time
         @Size(max = 6, min = 6, message = "Pin can only be 6 digit")
         @Pattern(regexp = "\\d+", message = "Pin can only be 6 digit")
         String pin,
