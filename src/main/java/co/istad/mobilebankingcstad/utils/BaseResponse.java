@@ -3,7 +3,10 @@ package co.istad.mobilebankingcstad.utils;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.hibernate.validator.internal.util.annotation.ConstraintAnnotationDescriptor;
 import org.springframework.http.HttpStatus;
+
+import java.lang.annotation.Annotation;
 
 @Accessors(chain = true)
 @Data
@@ -36,5 +39,11 @@ public class BaseResponse <T> {
                 .setStatus(HttpStatus.BAD_REQUEST.value())
                 .setMessage("Bad request provided !");
     }
+    public static <T> BaseResponse<T> updateSuccess(){
+        return new BaseResponse<T>()
+                .setStatus(HttpStatus.OK.value())
+                .setMessage("Successfully update the entry!");
+    }
+
 
 }

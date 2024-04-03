@@ -2,6 +2,7 @@ package co.istad.mobilebankingcstad.features.user;
 
 import co.istad.mobilebankingcstad.features.user.dto.UserRequest;
 import co.istad.mobilebankingcstad.features.user.dto.UserResponse;
+import co.istad.mobilebankingcstad.features.user.dto.UserUpdateRequest;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ public interface UserService {
 
     void deleteUserById(String id);
 
-    UserResponse updateUserById(String id, UserRequest userRequest);
+    UserResponse updateUserById(String id, UserUpdateRequest userRequest);
 
     UserResponse disableUser(String id);
 

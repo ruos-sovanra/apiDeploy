@@ -3,6 +3,7 @@ package co.istad.mobilebankingcstad.features.user;
 
 import co.istad.mobilebankingcstad.features.user.dto.UserRequest;
 import co.istad.mobilebankingcstad.features.user.dto.UserResponse;
+import co.istad.mobilebankingcstad.features.user.dto.UserUpdateRequest;
 import co.istad.mobilebankingcstad.utils.BaseResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -20,6 +21,8 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/users")
 @RequiredArgsConstructor
+
+//provide default values for requestbody and params
 public class UserRestController {
     private final UserService userService;
 
@@ -89,13 +92,16 @@ public class UserRestController {
 
     @PatchMapping("/{id}")
     @Operation(summary = "Update user by id")
+    // configure swagger to provide the default request body for updating the user
     public BaseResponse<UserResponse> updateUserByID(
-            @PathVariable() String id,@RequestBody UserRequest userRequest){
-        return BaseResponse.<UserResponse>ok()
+            @PathVariable() String id,@RequestBody UserUpdateRequest userRequest){
+        return BaseResponse.<UserResponse>updateSuccess()
                 .setPayload(userService.updateUserById(id,userRequest));
     }
+
+
     @PatchMapping("/{id}/disable")
-    public BaseResponse<UserResponse> disableUser(@PathVariable String id){
+    public BaseResponse<UserResponse> disableUser(@PathVariable() String id){
         return BaseResponse.<UserResponse>ok()
                 .setPayload(userService.disableUser(id));
     }
