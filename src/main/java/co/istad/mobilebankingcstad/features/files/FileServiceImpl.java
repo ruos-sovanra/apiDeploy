@@ -25,12 +25,10 @@ import java.util.*;
 public class FileServiceImpl implements FileService {
     @Value("${file.storage-dir}")
     String fileStorageDir;
-
     private static final Set<String> SUPPORTED_IMAGE_TYPES = Set.of(
             MediaType.IMAGE_JPEG_VALUE,
             MediaType.IMAGE_PNG_VALUE,
             MediaType.IMAGE_GIF_VALUE);
-
     //http://localhost:8888/api/v1/files/download/3f54df29-31f0-4c74-9552-62dfca9e4f1e.png
     private String generateImageUrl(HttpServletRequest request, String filename) {
         return String.format("%s://%s:%d/images/%s",
@@ -46,9 +44,7 @@ public class FileServiceImpl implements FileService {
                 request.getServerPort(),
                 filename);
     }
-
     private String uploadFile(MultipartFile file) {
-
        String contentType = file.getContentType();
        if(!SUPPORTED_IMAGE_TYPES.contains(contentType)){
            throw new ResponseStatusException(
@@ -79,10 +75,8 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public FileResponse uploadSingleFile(MultipartFile file, HttpServletRequest request) {
-
         String filename = uploadFile(file);
         String fullImageUrl = generateImageUrl(request, filename);
-
         return FileResponse.builder()
                 .downloadUrl(generateDownloadImageUrl(request,filename))
                 .fileType(file.getContentType())
@@ -90,7 +84,6 @@ public class FileServiceImpl implements FileService {
                 .filename(filename)
                 .fullUrl(fullImageUrl).build();
     }
-
     @Override
     public List<String> uploadMultipleFiles(MultipartFile[] files) {
         var fileNames = new ArrayList<String>();
@@ -99,7 +92,6 @@ public class FileServiceImpl implements FileService {
         }
         return fileNames;
     }
-
     @Override
     public ResponseEntity<Resource> serveFile(String filename, HttpServletRequest request) {
         try {
