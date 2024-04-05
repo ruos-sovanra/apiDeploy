@@ -54,8 +54,8 @@ public class AccountServiceImpl implements AccountService{
                 .setUser(owner)
                 .setIsDisabled(false);
         userAccountRepository.save(userAccount);
-   var accountResponse = accountMapper.mapUserAccountToAccountResponse(account);
-   accountMapper.setUserForAccountResponse(accountResponse,owner);
+   var accountResponse = accountMapper.mapUserAccountToAccountResponse(userAccount);
+//   accountMapper.setUserForAccountResponse(accountResponse,owner);
         return  accountResponse;
     }
     @Override
