@@ -7,7 +7,9 @@ import co.istad.mobilebankingcstad.features.accounttype.AccountTypeRepository;
 import co.istad.mobilebankingcstad.features.user.UserRepository;
 import co.istad.mobilebankingcstad.mapper.AccountMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -25,9 +27,24 @@ public class AccountServiceImpl implements AccountService{
 
     @Override
     public AccountResponse createAccount(AccountRequest request) {
+        // check account type
+        var accountType = accountTypeRepository
+                .findByName(request.accountType())
+                .orElseThrow(
+                        () -> new ResponseStatusException(
+                        HttpStatus.BAD_REQUEST,
+                        "Account Type : " + request.accountType() + " is not valid! "));
+        var owner = userRepository.findById(request.userId())
+                .orElseThrow(
+                        ()-> new ResponseStatusException(
+                                HttpStatus.BAD_REQUEST,
+                                "User ID = "+request.userId()+" is not a valid user"
+                        )
+                );
+
+
         return null;
     }
-
     @Override
     public AccountResponse findAccountById(String id) {
         return null;
