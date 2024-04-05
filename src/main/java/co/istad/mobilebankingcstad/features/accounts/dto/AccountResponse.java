@@ -13,7 +13,5 @@ public record AccountResponse(
         BigDecimal accountBalance,
         UserResponse user,
         String accountType
-
 ) {
-
 }

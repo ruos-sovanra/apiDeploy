@@ -1,10 +1,13 @@
 package co.istad.mobilebankingcstad.features.accounts;
 
 
+import co.istad.mobilebankingcstad.domain.Account;
+import co.istad.mobilebankingcstad.domain.UserAccount;
 import co.istad.mobilebankingcstad.features.accounts.dto.AccountRequest;
 import co.istad.mobilebankingcstad.features.accounts.dto.AccountResponse;
 import co.istad.mobilebankingcstad.features.accounttype.AccountTypeRepository;
 import co.istad.mobilebankingcstad.features.user.UserRepository;
+import co.istad.mobilebankingcstad.features.useraccount.UserAccountRepository;
 import co.istad.mobilebankingcstad.mapper.AccountMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,6 +23,7 @@ public class AccountServiceImpl implements AccountService{
     private final AccountTypeRepository accountTypeRepository;
     private final AccountRepository accountRepository;
     private final UserRepository userRepository;
+    private final UserAccountRepository userAccountRepository;
     @Override
     public List<AccountResponse> getAllAccounts() {
         return null;
@@ -42,8 +46,17 @@ public class AccountServiceImpl implements AccountService{
                         )
                 );
 
-
-        return null;
+        var account = accountMapper.mapRequestToEntity(request);
+        account.setAccountType(accountType);
+        // account info from the request
+        UserAccount userAccount = new UserAccount()
+                .setAccount(account)
+                .setUser(owner)
+                .setIsDisabled(false);
+        userAccountRepository.save(userAccount);
+   var accountResponse = accountMapper.mapUserAccountToAccountResponse(account);
+   accountMapper.setUserForAccountResponse(accountResponse,owner);
+        return  accountResponse;
     }
     @Override
     public AccountResponse findAccountById(String id) {
