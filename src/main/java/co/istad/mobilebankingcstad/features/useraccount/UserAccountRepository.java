@@ -1,4 +1,5 @@
 package co.istad.mobilebankingcstad.features.useraccount;
+import co.istad.mobilebankingcstad.domain.User;
 import co.istad.mobilebankingcstad.domain.UserAccount;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -14,5 +15,8 @@ public interface UserAccountRepository extends JpaRepository<UserAccount,String>
 
     @Query("SELECT COUNT(ua) FROM user_accounts_tbl ua WHERE ua.user.id = ?1")
     int  countAccountsByUserId(@Param("userId") String userId);
+
+//    using derived qeury instead
+    Long countByUser(User user); // derived query
 
 }
