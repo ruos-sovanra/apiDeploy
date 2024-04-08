@@ -1,6 +1,4 @@
 package co.istad.mobilebankingcstad.mapper;
-
-
 import co.istad.mobilebankingcstad.domain.Account;
 import co.istad.mobilebankingcstad.domain.User;
 import co.istad.mobilebankingcstad.domain.UserAccount;
@@ -10,13 +8,10 @@ import co.istad.mobilebankingcstad.features.user.dto.UserResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
-
 @Mapper(componentModel = "spring", uses = {UserMapper.class})
 public interface AccountMapper {
     @Mapping(target = "accountType", ignore = true)
     Account mapRequestToEntity(AccountRequest accountRequest);
-
-
     @Mapping(target="id", source = "userAccount.id")
     @Mapping(target = "accountNumber", source = "userAccount.account.accountNumber")
     @Mapping(target = "accountName", source = "userAccount.account.accountName")

@@ -26,7 +26,10 @@ public class AccountServiceImpl implements AccountService{
     private final UserAccountRepository userAccountRepository;
     @Override
     public List<AccountResponse> getAllAccounts() {
-        return null;
+        return  userAccountRepository.findAll()
+                .stream()
+                .map(accountMapper::mapUserAccountToAccountResponse)
+                .toList();
     }
 
     @Override
@@ -45,7 +48,12 @@ public class AccountServiceImpl implements AccountService{
                                 "User ID = "+request.userId()+" is not a valid user"
                         )
                 );
-
+        if(userAccountRepository.countAccountsByUserId(request.userId())>=5) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "User ID = "+request.userId()+" already has 5 accounts"
+            );
+        }
         var account = accountMapper.mapRequestToEntity(request);
         account.setAccountType(accountType);
         // account info from the request
@@ -54,9 +62,7 @@ public class AccountServiceImpl implements AccountService{
                 .setUser(owner)
                 .setIsDisabled(false);
         userAccountRepository.save(userAccount);
-   var accountResponse = accountMapper.mapUserAccountToAccountResponse(userAccount);
-//   accountMapper.setUserForAccountResponse(accountResponse,owner);
-        return  accountResponse;
+        return accountMapper.mapUserAccountToAccountResponse(userAccount);
     }
     @Override
     public AccountResponse findAccountById(String id) {
