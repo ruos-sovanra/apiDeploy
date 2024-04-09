@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 public interface UserAccountRepository extends JpaRepository<UserAccount,String> {
 
     // method for counting the number of account by user id
-
     @Query("SELECT COUNT(ua) FROM user_accounts_tbl ua WHERE ua.user.id = ?1")
     int  countAccountsByUserId(@Param("userId") String userId);
 
