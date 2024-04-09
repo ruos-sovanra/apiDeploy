@@ -72,4 +72,19 @@ public class AccountRestController {
     }
 
 
+    @GetMapping("/user/{id}")
+    @Operation(summary = "find account(s) by user id ")
+    public BaseResponse<List<AccountResponse>> findAccountsByUserId(
+            @Parameter(
+                    description = "user id ",
+                    required = true,
+                    example = "bb455eff-41ab-41aa-8e9a-dd1f0a3c69a5"
+            )
+            @PathVariable String id){
+        return BaseResponse.<List<AccountResponse>>ok()
+                .setPayload(accountService.findAccountsByUserId(id))
+                ;
+    }
+
+
 }

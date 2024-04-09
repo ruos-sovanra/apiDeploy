@@ -91,6 +91,11 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public List<AccountResponse> findAccountsByUserId(String userId) {
-        return null;
+        var userAccountByUserId = userAccountRepository.findByUser_Id(userId);
+
+        return userAccountByUserId.stream()
+                .map(accountMapper::mapUserAccountToAccountResponse)
+                .toList();
+
     }
 }
