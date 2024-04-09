@@ -12,4 +12,7 @@ public interface AccountService {
     AccountResponse findAccountById(String id);
     AccountResponse findAccountByAccountNumber(String accountNumber);
     List<AccountResponse> findAccountsByUserId(String userId);
+
+    // enable and disable
+    // auto create card when accounttype is card type !
 }
