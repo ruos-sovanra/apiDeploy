@@ -18,15 +18,16 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class AccountServiceImpl implements AccountService{
+public class AccountServiceImpl implements AccountService {
     private final AccountMapper accountMapper;
     private final AccountTypeRepository accountTypeRepository;
     private final AccountRepository accountRepository;
     private final UserRepository userRepository;
     private final UserAccountRepository userAccountRepository;
+
     @Override
     public List<AccountResponse> getAllAccounts() {
-        return  userAccountRepository.findAll()
+        return userAccountRepository.findAll()
                 .stream()
                 .map(accountMapper::mapUserAccountToAccountResponse)
                 .toList();
@@ -39,19 +40,19 @@ public class AccountServiceImpl implements AccountService{
                 .findByName(request.accountType())
                 .orElseThrow(
                         () -> new ResponseStatusException(
-                        HttpStatus.BAD_REQUEST,
-                        "Account Type : " + request.accountType() + " is not valid! "));
+                                HttpStatus.BAD_REQUEST,
+                                "Account Type : " + request.accountType() + " is not valid! "));
         var owner = userRepository.findById(request.userId())
                 .orElseThrow(
-                        ()-> new ResponseStatusException(
+                        () -> new ResponseStatusException(
                                 HttpStatus.BAD_REQUEST,
-                                "User ID = "+request.userId()+" is not a valid user"
+                                "User ID = " + request.userId() + " is not a valid user"
                         )
                 );
-        if(userAccountRepository.countAccountsByUserId(request.userId())>=5) {
+        if (userAccountRepository.countAccountsByUserId(request.userId()) >= 5) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
-                    "User ID = "+request.userId()+" already has 5 accounts"
+                    "User ID = " + request.userId() + " already has 5 accounts"
             );
         }
         var account = accountMapper.mapRequestToEntity(request);
@@ -64,9 +65,14 @@ public class AccountServiceImpl implements AccountService{
         userAccountRepository.save(userAccount);
         return accountMapper.mapUserAccountToAccountResponse(userAccount);
     }
+
     @Override
     public AccountResponse findAccountById(String id) {
-        return null;
+        var userAccount = userAccountRepository.findByAccount_Id(id)
+                .orElseThrow(
+                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Account with id = " + id + " doesn't exist ! "));
+        return accountMapper.mapUserAccountToAccountResponse(userAccount);
     }
 
     @Override

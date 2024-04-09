@@ -4,6 +4,8 @@ import co.istad.mobilebankingcstad.features.accounts.dto.AccountRequest;
 import co.istad.mobilebankingcstad.features.accounts.dto.AccountResponse;
 import co.istad.mobilebankingcstad.utils.BaseResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -29,10 +31,31 @@ public class AccountRestController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Create account !")
+    // default request body for the swagger
     public BaseResponse<AccountResponse> createAccount(
             @RequestBody AccountRequest request
     ) {
         return BaseResponse.<AccountResponse>createSuccess()
                 .setPayload(accountService.createAccount(request));
     }
+
+    // get account by account id
+
+
+    //    @Parameters
+    @GetMapping("/{id}")
+    @Operation(summary = "Get account by accountId")
+    public BaseResponse<AccountResponse> getAccountByAccountId(
+            @Parameter(
+                    description = "Account ID ",
+                    required = true,
+                    example = "e55eb02b-0537-4432-835b-1af26d4b5906"
+            )
+            @PathVariable String id) {
+
+        return BaseResponse.<AccountResponse>ok()
+                .setPayload(accountService.findAccountById(id));
+    }
+
+
 }

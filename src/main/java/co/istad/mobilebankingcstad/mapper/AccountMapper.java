@@ -12,7 +12,7 @@ import org.mapstruct.MappingTarget;
 public interface AccountMapper {
     @Mapping(target = "accountType", ignore = true)
     Account mapRequestToEntity(AccountRequest accountRequest);
-    @Mapping(target="id", source = "userAccount.id")
+    @Mapping(target="id", source = "userAccount.account.id")
     @Mapping(target = "accountNumber", source = "userAccount.account.accountNumber")
     @Mapping(target = "accountName", source = "userAccount.account.accountName")
     @Mapping(target = "accountBalance", source = "userAccount.account.accountBalance")
