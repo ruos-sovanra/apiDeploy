@@ -71,13 +71,22 @@ public class AccountServiceImpl implements AccountService {
         var userAccount = userAccountRepository.findByAccount_Id(id)
                 .orElseThrow(
                         () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Account with id = " + id + " doesn't exist ! "));
+                                "Account with id = " + id + " doesn't exist ! "));
         return accountMapper.mapUserAccountToAccountResponse(userAccount);
     }
 
     @Override
     public AccountResponse findAccountByAccountNumber(String accountNumber) {
-        return null;
+        var accountByAccountNumber = userAccountRepository
+                .findByAccount_AccountNumber(accountNumber)
+                .orElseThrow(
+                        () ->
+                                new ResponseStatusException(
+                                        HttpStatus.NOT_FOUND,
+                                        "Account with Account Number = " + accountNumber +
+                                                " doesn't exist !")
+                );
+        return accountMapper.mapUserAccountToAccountResponse(accountByAccountNumber);
     }
 
     @Override

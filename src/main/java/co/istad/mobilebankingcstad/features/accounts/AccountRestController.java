@@ -57,5 +57,19 @@ public class AccountRestController {
                 .setPayload(accountService.findAccountById(id));
     }
 
+    @GetMapping("/account-number/{id}")
+    @Operation(summary = "Find Accounts By Account Number ")
+    public BaseResponse<AccountResponse> getAccountByAccountNumber(
+            @Parameter(
+                    description = "account number",
+                    required = true,
+                    example = "string1"
+            )
+            @PathVariable("id") String accountNumber){
+        return BaseResponse.<AccountResponse>
+                ok()
+                .setPayload(accountService.findAccountByAccountNumber(accountNumber));
+    }
+
 
 }

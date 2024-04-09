@@ -16,6 +16,7 @@ public interface UserAccountRepository extends JpaRepository<UserAccount,String>
 
     // find useraccount by it's fields account -> account id
     Optional<UserAccount> findByAccount_Id(String id );
+    Optional<UserAccount> findByAccount_AccountNumber(String accountNumber);
 
 
     // method for counting the number of account by user id
